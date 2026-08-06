@@ -9,27 +9,23 @@ class Divisi extends Model
     protected $fillable = [
         'kode_divisi',
         'nama_divisi',
-        'kapasitas',
+        'kuota',
+        'kuota_terpakai',
         'deskripsi',
     ];
 
-    public function pesertaMagangs()
+    public function pesertaMagang()
     {
         return $this->hasMany(PesertaMagang::class);
     }
 
-    public function kuotaTerpakai(): int
-    {
-        return $this->pesertaMagangs()->where('status' , 'Aktif')->count();
-    }
-
     public function kuotaTersisa(): int
     {
-        return max(0, $this->kapasitas - $this->kuotaTerpakai());
+        return max(0, $this->kuota - $this->kuota_terpakai);
     }
 
     public function kuotaTersedia(): bool
     {
-        return $this->sisaKuota() > 0;
+        return $this->kuotaTersisa() > 0;
     }
 }
