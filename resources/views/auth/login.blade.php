@@ -1,26 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Login - SIMAMANG')
+@section('body_class', 'narrow')
+
+@section('content')
 
 <h2>Login SIMAMANG</h2>
 
-<form method="POST" action="/login">
+@if ($errors->any())
+    <div class="alert-error">
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+@endif
+
+<form method="POST" action="{{ route('login') }}">
     @csrf
 
-    <input type="email" name="email">
+    <div class="form-group">
+        <label>Email</label><br>
+        <input type="email" name="email" value="{{ old('email') }}" required autofocus>
+    </div>
 
-    <br><br>
+    <div class="form-group">
+        <label>Password</label><br>
+        <input type="password" name="password" required>
+    </div>
 
-    <input type="password" name="password">
-
-    <br><br>
+    <div class="form-group">
+        <label>
+            <input type="checkbox" name="remember">
+            Ingat Saya
+        </label>
+    </div>
 
     <button type="submit">Login</button>
-
 </form>
 
-</body>
-</html>
+@endsection
