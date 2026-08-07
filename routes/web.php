@@ -3,7 +3,6 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PesertaMagangController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PesertaMagangController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
