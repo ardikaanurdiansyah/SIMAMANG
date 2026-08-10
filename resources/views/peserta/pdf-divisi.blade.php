@@ -130,7 +130,7 @@
     
     <div class="summary">
         <div class="summary-item">
-            <div class="summary-label">Total Peserta di Divisi</div>
+            <div class="summary-label">Total Peserta</div>
             <div class="summary-value">{{ $total_peserta }}</div>
         </div>
         <div class="summary-item">
@@ -142,14 +142,15 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 5%;">No</th>
-                <th style="width: 20%;">Nama</th>
-                <th style="width: 15%;">Asal Instansi</th>
-                <th style="width: 15%;">Jurusan</th>
-                <th style="width: 12%;">No. HP</th>
-                <th style="width: 11%;">Tanggal Mulai</th>
-                <th style="width: 11%;">Tanggal Selesai</th>
-                <th style="width: 8%;">Hari</th>
+                <th style="width: 4%;">No</th>
+                <th style="width: 16%;">Nama</th>
+                <th style="width: 12%;">Divisi</th>
+                <th style="width: 14%;">Asal Instansi</th>
+                <th style="width: 13%;">Jurusan</th>
+                <th style="width: 11%;">No. HP</th>
+                <th style="width: 10%;">Tgl Mulai</th>
+                <th style="width: 10%;">Tgl Selesai</th>
+                <th style="width: 6%;">Hari</th>
             </tr>
         </thead>
         <tbody>
@@ -157,16 +158,17 @@
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td><strong>{{ $p->nama }}</strong></td>
+                <td>{{ $p->divisi->nama ?? '-' }}</td>
                 <td>{{ $p->asal_instansi }}</td>
                 <td>{{ $p->jurusan }}</td>
                 <td>{{ $p->no_hp }}</td>
                 <td>{{ $p->tanggal_mulai->format('d/m/Y') }}</td>
                 <td>{{ $p->tanggal_selesai->format('d/m/Y') }}</td>
-                <td class="text-center">{{ $p->tanggal_mulai->diffInDays($p->tanggal_selesai) }}</td>
+                <td style="text-align: center;">{{ $p->tanggal_mulai->diffInDays($p->tanggal_selesai) }}</td>
             </tr>
             @empty
             <tr>
-                <td colspan="8" style="text-align: center; color: #999;">Tidak ada data peserta</td>
+                <td colspan="9" style="text-align: center; color: #999;">Tidak ada data peserta</td>
             </tr>
             @endforelse
         </tbody>

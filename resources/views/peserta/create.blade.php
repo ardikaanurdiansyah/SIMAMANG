@@ -1,63 +1,251 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Peserta Magang - SIMAMANG')
-@section('body_class', 'narrow')
+@section('title', 'Daftar Magang')
 
 @section('content')
-    <h2>Tambah Data Peserta Magang</h2>
-    <p><a href="{{ route('dashboard') }}">&larr; Kembali ke dashboard</a></p>
 
-    @if ($errors->any())
-        <div class="alert-error">
-            @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
-        </div>
-    @endif
+<div class="row justify-content-center">
 
-    <form method="POST" action="{{ route('peserta.store') }}">
-        @csrf
-        <div class="form-group">
-            <label>Divisi (hanya yang kuotanya masih tersedia)</label><br>
-            <select name="divisi_id" required>
-                <option value="">-- pilih divisi --</option>
-                @forelse ($divisis as $divisi)
-                    <option value="{{ $divisi->id }}" {{ old('divisi_id') == $divisi->id ? 'selected' : '' }}>
-                        {{ $divisi->nama_divisi }} (sisa {{ $divisi->sisaKuota() }})
-                    </option>
-                @empty
-                    <option value="" disabled>Tidak ada divisi dengan kuota tersedia</option>
-                @endforelse
-            </select>
+    <div class="col-lg-8">
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body p-4">
+
+                <h3 class="fw-bold mb-1">
+                    Pendaftaran Magang
+                </h3>
+
+                <p class="text-muted mb-4">
+                    Silakan lengkapi data diri dan pilih divisi magang.
+                </p>
+
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>Terjadi kesalahan:</strong>
+
+                        <ul class="mb-0 mt-2">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form
+                    action="{{ route('peserta.store') }}"
+                    method="POST"
+                >
+
+                    @csrf
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            Divisi
+                        </label>
+
+                        <select
+                            name="divisi_id"
+                            class="form-select @error('divisi_id') is-invalid @enderror"
+                            required
+                        >
+                            <option value="">
+                                -- Pilih Divisi --
+                            </option>
+
+                            @foreach($divisis as $divisi)
+
+                                <option
+                                    value="{{ $divisi->id }}"
+                                    {{ old('divisi_id') == $divisi->id ? 'selected' : '' }}
+                                >
+                                    {{ $divisi->nama_divisi }}
+                                    (Sisa {{ $divisi->kuotaTersisa() }})
+                                </option>
+
+                            @endforeach
+                        </select>
+
+                        @error('divisi_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            Nama Lengkap
+                        </label>
+
+                        <input
+                            type="text"
+                            name="nama"
+                            class="form-control @error('nama') is-invalid @enderror"
+                            value="{{ old('nama') }}"
+                            required
+                        >
+
+                        @error('nama')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            Asal Instansi
+                        </label>
+
+                        <input
+                            type="text"
+                            name="asal_instansi"
+                            class="form-control @error('asal_instansi') is-invalid @enderror"
+                            value="{{ old('asal_instansi') }}"
+                            required
+                        >
+
+                        @error('asal_instansi')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            Jurusan
+                        </label>
+
+                        <input
+                            type="text"
+                            name="jurusan"
+                            class="form-control @error('jurusan') is-invalid @enderror"
+                            value="{{ old('jurusan') }}"
+                            required
+                        >
+
+                        @error('jurusan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            No. HP
+                        </label>
+
+                        <input
+                            type="text"
+                            name="no_hp"
+                            class="form-control @error('no_hp') is-invalid @enderror"
+                            value="{{ old('no_hp') }}"
+                            required
+                        >
+
+                        @error('no_hp')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control @error('email') is-invalid @enderror"
+                            value="{{ old('email') }}"
+                        >
+
+                        @error('email')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Tanggal Mulai
+                            </label>
+
+                            <input
+                                type="date"
+                                name="tanggal_mulai"
+                                class="form-control @error('tanggal_mulai') is-invalid @enderror"
+                                value="{{ old('tanggal_mulai') }}"
+                                required
+                            >
+
+                            @error('tanggal_mulai')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Tanggal Selesai
+                            </label>
+
+                            <input
+                                type="date"
+                                name="tanggal_selesai"
+                                class="form-control @error('tanggal_selesai') is-invalid @enderror"
+                                value="{{ old('tanggal_selesai') }}"
+                                required
+                            >
+
+                            @error('tanggal_selesai')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+
+                        <a
+                            href="{{ route('dashboard') }}"
+                            class="btn btn-secondary"
+                        >
+                            Kembali
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary px-4"
+                        >
+                            Daftar Magang
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
         </div>
-        <div class="form-group">
-            <label>Nama peserta</label><br>
-            <input type="text" name="nama" value="{{ old('nama') }}" required>
-        </div>
-        <div class="form-group">
-            <label>Asal sekolah / kampus</label><br>
-            <input type="text" name="asal_instansi" value="{{ old('asal_instansi') }}" required>
-        </div>
-        <div class="form-group">
-            <label>Jurusan</label><br>
-            <input type="text" name="jurusan" value="{{ old('jurusan') }}" required>
-        </div>
-        <div class="form-group">
-            <label>No. HP</label><br>
-            <input type="text" name="no_hp" value="{{ old('no_hp') }}" required>
-        </div>
-        <div class="form-group">
-            <label>Email (opsional)</label><br>
-            <input type="email" name="email" value="{{ old('email') }}">
-        </div>
-        <div class="form-group">
-            <label>Tanggal mulai</label><br>
-            <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}" required>
-        </div>
-        <div class="form-group">
-            <label>Tanggal selesai (rencana)</label><br>
-            <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai') }}" required>
-        </div>
-        <button type="submit">Simpan &amp; terima peserta</button>
-    </form>
+
+    </div>
+
+</div>
+
 @endsection

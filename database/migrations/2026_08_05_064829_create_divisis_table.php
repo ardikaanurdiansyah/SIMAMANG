@@ -1,32 +1,53 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-return new class extends Migration
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Divisi extends Model
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('divisis', function (Blueprint $table) {
-    $table->id();
-    $table->string('kode_divisi', 10)->unique();
-    $table->string('nama_divisi');
-    $table->integer('kapasitas');
-    $table->text('deskripsi')->nullable();
-    $table->timestamps();
+    protected $fillable = [
+        'kode_divisi',
+        'nama_divisi',
+        'kapasitas',
+        'deskripsi',
+    ];
 
-        });
+    /**
+     * Relasi ke PesertaMagang
+     */
+    public function pesertaMagangs(): HasMany
+    {
+        return $this->hasMany(PesertaMagang::class, 'divisi_id');
     }
 
     /**
-     * Reverse the migrations.
+     * Menghitung jumlah peserta magang yang masih aktif
      */
-    public function down(): void
+    public function pesertaAktif(): int
     {
-        Schema::dropIfExists('divisis');
+        return $this->pesertaMagangs()
+            ->where('status', 'Aktif')
+            ->count();
     }
-};
+
+    /**
+     * Menghitung sisa kuota divisi
+     */
+    public function kuotaTersisa(): int
+    {
+        return max(
+            0,
+            $this->kapasitas - $this->pesertaAktif()
+        );
+    }
+
+    /**
+     * Mengecek apakah divisi masih memiliki kuota
+     */
+    public function kuotaTersedia(): bool
+    {
+        return $this->kuotaTersisa() > 0;
+    }
+}
