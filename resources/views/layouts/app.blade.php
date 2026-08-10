@@ -30,6 +30,7 @@
     >
 
 </head>
+<<<<<<< HEAD
 
 
 <body class="bg-light">
@@ -43,6 +44,12 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
 
+=======
+<body class="@yield('body_class')">
+
+    @yield('content')
+
+>>>>>>> 5b1f9aebfb41325aa54517ed974ac4ecd93d3209
 </body>
 
 </html>

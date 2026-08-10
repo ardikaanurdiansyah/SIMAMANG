@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+body {
+    font-family: sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+>>>>>>> 5b1f9aebfb41325aa54517ed974ac4ecd93d3209
 :root {
     color-scheme: light;
     font-family: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -141,6 +151,7 @@ body {
 
 .table-row-hidden {
     display: none !important;
+<<<<<<< HEAD
 }
 
 .narrow {
@@ -191,3 +202,6 @@ button, input[type="submit"] {
     margin-top: 15px;
 }
 
+=======
+}
+>>>>>>> 5b1f9aebfb41325aa54517ed974ac4ecd93d3209

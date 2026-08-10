@@ -1,7 +1,16 @@
 @extends('layouts.app')
+<<<<<<< HEAD
+=======
+
+@section('title', 'Login - SIMAMANG')
+@section('body_class', 'narrow')
+
+@section('content')
+>>>>>>> 5b1f9aebfb41325aa54517ed974ac4ecd93d3209
 
 @section('content')
 
+<<<<<<< HEAD
 <div class="bg-danger text-white p-5 text-center">
 
     <h1>BOOTSTRAP TEST</h1>
@@ -173,4 +182,37 @@
 
 </div>
 
+=======
+@if ($errors->any())
+    <div class="alert-error">
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+@endif
+
+<form method="POST" action="{{ route('login') }}">
+    @csrf
+
+    <div class="form-group">
+        <label>Email</label><br>
+        <input type="email" name="email" value="{{ old('email') }}" required autofocus>
+    </div>
+
+    <div class="form-group">
+        <label>Password</label><br>
+        <input type="password" name="password" required>
+    </div>
+
+    <div class="form-group">
+        <label>
+            <input type="checkbox" name="remember">
+            Ingat Saya
+        </label>
+    </div>
+
+    <button type="submit">Login</button>
+</form>
+
+>>>>>>> 5b1f9aebfb41325aa54517ed974ac4ecd93d3209
 @endsection
