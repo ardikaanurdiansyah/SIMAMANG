@@ -46,14 +46,9 @@
 
         <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
 
-            <a>
-                href="{{ route('peserta.create') }}"
-                class="btn btn-light btn-lg text-primary fw-semibold shadow-sm"
-            >
-                <i class="bi bi-pencil-square me-2"></i>
+            <a><i class="bi bi-pencil-square me-2"></i>
                 Daftar Sekarang
             </a>
-
         </div>
 
     </div>

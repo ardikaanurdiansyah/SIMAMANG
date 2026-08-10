@@ -11,14 +11,6 @@
                 <h1 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">Riwayat Magang</h1>
                 <p class="mt-4 text-lg leading-8 text-slate-600">Daftar peserta yang telah menyelesaikan program magang.</p>
             </div>
-
-            <div class="flex flex-wrap items-center gap-3">
-                @auth
-                    @if(auth()->user()->is_admin)
-                        <a href="{{ route('peserta.export-all-pdf') }}" class="action-link action-link-success">📄 Export PDF</a>
-                    @endif
-                @endauth
-            </div>
         </div>
     </section>
 
@@ -44,7 +36,7 @@
                             <td class="px-6 py-4 text-sm text-slate-700">{{ $peserta->asal_instansi }}</td>
                             <td class="px-6 py-4 text-sm text-slate-700">{{ $peserta->jurusan }}</td>
                             <td class="px-6 py-4 text-sm text-slate-700">{{ $peserta->divisi->nama_divisi }}</td>
-                            <td class="px-6 py-4 text-sm text-slate-700">{{ $peserta->tanggal_mulai->format('d-m-Y') }}</td>
+                            <td class="px-6 py-4 text-sm text-slate-700">{{ optional($peserta->tanggal_mulai)->format('d-m-Y') }}</td>
                             <td class="px-6 py-4 text-sm text-slate-700">{{ optional($peserta->tanggal_selesai)->format('d-m-Y') }}</td>
                             <td class="px-6 py-4 text-sm">
                                 @if ($peserta->status === 'Aktif')
@@ -54,12 +46,18 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-sm text-slate-700">
-                                @if ($peserta->status === 'Aktif')
-                                    <form action="{{ route('peserta.selesai', $peserta) }}" method="POST">
-                                        @csrf @method('PATCH')
-                                        <button type="submit" class="action-link action-link-success">Tandai Selesai</button>
-                                    </form>
-                                @endif
+                                <div class="flex flex-wrap items-center gap-2">
+                                    @if ($peserta->status === 'Aktif')
+                                        <form action="{{ route('peserta.selesaikan', $peserta) }}" method="POST">
+                                            @csrf @method('PATCH')
+                                            <button type="submit" class="action-link action-link-success">Tandai Selesai</button>
+                                        </form>
+                                    @endif
+
+                                    <a href="{{ route('peserta.export-pdf', $peserta->id) }}" class="action-link action-link-success">
+                                        📄 Export PDF
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @empty
